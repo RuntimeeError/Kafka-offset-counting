@@ -42,20 +42,8 @@ public class KafkaSampleConsumer {
 
             for (ConsumerRecord<String, String> record : records) {
                 System.out.printf("offset = %d, key = %s, value = %s", record.offset(), record.key(), record.value());
+                 logger.info("Partition:" + record.partition()+",Offset:"+record.offset());
             }
-
-            if (records.count()>0){
-              consumer.paused();
-                for(ConsumerRecord<String,String> record: records){
-                    System.out.println(record.value() + " received");
-                    logger.info("Key: "+ record.key() + ", Value:" +record.value());
-                    logger.info("Partition:" + record.partition()+",Offset:"+record.offset());
-                }
-                Thread.sleep(5000);
-                consumer.resume(consumer.paused());
-            }
-
-
         }
     }
 }
